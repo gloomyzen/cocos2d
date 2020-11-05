@@ -185,6 +185,10 @@ void GLView::setDesignResolutionSize(float width, float height, ResolutionPolicy
     updateDesignResolutionSize();
  }
 
+void GLView::setResolutionPolicy(ResolutionPolicy value) {
+	_resolutionPolicy = value;
+}
+
 const Size& GLView::getDesignResolutionSize() const 
 {
     return _designResolutionSize;

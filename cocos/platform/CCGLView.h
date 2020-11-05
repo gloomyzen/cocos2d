@@ -254,6 +254,8 @@ public:
      */
     virtual void setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy);
 
+    virtual void setResolutionPolicy(ResolutionPolicy value);
+
     /** Get design resolution size.
      *  Default resolution size is the same as 'getFrameSize'.
      *
