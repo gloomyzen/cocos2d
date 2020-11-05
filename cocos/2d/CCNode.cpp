@@ -89,7 +89,7 @@ Node::Node()
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
-, _name("")
+, _name("Node")
 , _hashOfName(0)
 // userData is always inited as nil
 , _userData(nullptr)
