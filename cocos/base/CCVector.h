@@ -122,7 +122,7 @@ public:
     : _data()
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
-        CCLOGINFO("In the default constructor with capacity of Vector.");
+        CCLOG("In the default constructor with capacity of Vector.");
         reserve(capacity);
     }
 
@@ -138,7 +138,7 @@ public:
     /** Destructor. */
     ~Vector<T>()
     {
-        CCLOGINFO("In the destructor of Vector.");
+        CCLOG("In the destructor of Vector.");
         clear();
     }
 
@@ -146,7 +146,7 @@ public:
     Vector<T>(const Vector<T>& other)
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
-        CCLOGINFO("In the copy constructor!");
+        CCLOG("In the copy constructor!");
         _data = other._data;
         addRefForAllObjects();
     }
@@ -155,7 +155,7 @@ public:
     Vector<T>(Vector<T>&& other)
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
-        CCLOGINFO("In the move constructor of Vector!");
+        CCLOG("In the move constructor of Vector!");
         _data = std::move(other._data);
     }
     
@@ -163,7 +163,7 @@ public:
     Vector<T>& operator=(const Vector<T>& other)
     {
         if (this != &other) {
-            CCLOGINFO("In the copy assignment operator!");
+            CCLOG("In the copy assignment operator!");
             clear();
             _data = other._data;
             addRefForAllObjects();
@@ -175,7 +175,7 @@ public:
     Vector<T>& operator=(Vector<T>&& other)
     {
         if (this != &other) {
-            CCLOGINFO("In the move assignment operator!");
+            CCLOG("In the move assignment operator!");
             clear();
             _data = std::move(other._data);
         }

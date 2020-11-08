@@ -101,7 +101,7 @@ inline float rand_minus1_1() {
     // without a proper way to set a seed is not useful.
     // Resorting to the old random method since it can
     // be seeded using std::srand()
-    return ((std::rand() / (float)RAND_MAX) * 2) -1;
+    return ((static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX)) * 2) - 1;
 
 //    return cocos2d::random(-1.f, 1.f);
 };
@@ -115,7 +115,7 @@ inline float rand_0_1() {
     // without a proper way to set a seed is not useful.
     // Resorting to the old random method since it can
     // be seeded using std::srand()
-    return std::rand() / (float)RAND_MAX;
+    return static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX);
 
 //    return cocos2d::random(0.f, 1.f);
 };
