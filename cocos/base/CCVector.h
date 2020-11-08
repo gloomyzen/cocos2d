@@ -138,7 +138,6 @@ public:
     /** Destructor. */
     ~Vector<T>()
     {
-        CCLOG("In the destructor of Vector.");
         clear();
     }
 
@@ -146,7 +145,6 @@ public:
     Vector<T>(const Vector<T>& other)
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
-        CCLOG("In the copy constructor!");
         _data = other._data;
         addRefForAllObjects();
     }
