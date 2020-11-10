@@ -122,7 +122,6 @@ public:
     : _data()
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
-        CCLOG("In the default constructor with capacity of Vector.");
         reserve(capacity);
     }
 
