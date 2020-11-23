@@ -75,6 +75,7 @@ Node::Node()
 , _skewX(0.0f)
 , _skewY(0.0f)
 , _anchorPoint(0, 0)
+, _pivotPoint(0, 0)
 , _contentSize(Size::ZERO)
 , _contentSizeDirty(true)
 , _transformDirty(true)
@@ -660,6 +661,15 @@ void Node::setAnchorPoint(const Vec2& point)
         _anchorPointInPoints.set(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
         _transformUpdated = _transformDirty = _inverseDirty = true;
     }
+}
+
+void Node::setPivotPoint(const Vec2& point) {
+    _pivotPoint = point;
+	_transformUpdated = _transformDirty = _inverseDirty = true;
+}
+
+const Vec2 &Node::getPivotPoint() const {
+    return _pivotPoint;
 }
 
 /// contentSize getter
@@ -1715,6 +1725,10 @@ const Mat4& Node::getNodeToParentTransform() const
         {
             x += _anchorPointInPoints.x;
             y += _anchorPointInPoints.y;
+        }
+        if (_parent) {
+            x += _parent->getContentSize().width * _pivotPoint.x;
+            y += _parent->getContentSize().height * _pivotPoint.y;
         }
 
         bool needsSkewMatrix = ( _skewX || _skewY );

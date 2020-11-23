@@ -100,6 +100,7 @@ class EventListener;
  - scale (default: x=1, y=1)
  - rotation (in degrees, clockwise) (default: 0)
  - anchor point (default: x=0, y=0)
+ - pivot point (default: x=0, y=0)
  - contentSize (default: width=0, height=0)
  - visible (default: true)
 
@@ -551,6 +552,8 @@ public:
      *
      * @return The anchor point in absolute pixels.
      */
+	virtual void setPivotPoint(const Vec2& anchorPoint);
+	virtual const Vec2& getPivotPoint() const;
     virtual const Vec2& getAnchorPointInPoints() const;
 
 
@@ -1851,6 +1854,7 @@ protected:
 
     Vec2 _anchorPointInPoints;      ///< anchor point in points
     Vec2 _anchorPoint;              ///< anchor point normalized (NOT in points)
+    Vec2 _pivotPoint;
 
     Size _contentSize;              ///< untransformed size of the node
     bool _contentSizeDirty;         ///< whether or not the contentSize is dirty

@@ -432,9 +432,12 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
     _hAlignment = hAlignment;
     _vAlignment = vAlignment;
 
-#if CC_LABEL_DEBUG_DRAW
-    _debugDrawNode = DrawNode::create();
-    addChild(_debugDrawNode);
+#if DEBUG
+    if (isDebugDraw) {
+        _debugDrawNode = DrawNode::create();
+        _debugDrawNode->setName("debugNode");
+        addChild(_debugDrawNode);
+    }
 #endif
 
     _purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
@@ -454,7 +457,7 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
         }
     });
     _eventDispatcher->addEventListenerWithFixedPriority(_purgeTextureListener, 1);
-    
+
     _resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
@@ -600,19 +603,19 @@ void Label::setVertexLayout(PipelineDescriptor& pipelineDescriptor)
                         backend::VertexFormat::FLOAT3,
                         0,
                         false);
-    
+
     ///a_texCoord
     vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_TEXCOORD,
                         _programState->getAttributeLocation(backend::Attribute::TEXCOORD),
                         backend::VertexFormat::FLOAT2,
                         offsetof(V3F_C4B_T2F, texCoords),
                         false);
-    
+
     ///a_color
     vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_COLOR,
                         _programState->getAttributeLocation(backend::Attribute::COLOR),
-                        backend::VertexFormat::UBYTE4, 
-                        offsetof(V3F_C4B_T2F, colors), 
+                        backend::VertexFormat::UBYTE4,
+                        offsetof(V3F_C4B_T2F, colors),
                         true);
     vertexLayout->setLayout(sizeof(V3F_C4B_T2F));
 }
@@ -749,11 +752,11 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
     }
     _fontAtlas = atlas;
-    
+
     if (_reusedLetter == nullptr)
     {
         _reusedLetter = Sprite::create();
-        _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);            
+        _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);
         _reusedLetter->retain();
         _reusedLetter->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
     }
@@ -783,7 +786,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
 bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset, float fontSize)
 {
     FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath,imageOffset);
-    
+
     if (!newAtlas)
     {
         reset();
@@ -887,7 +890,7 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
     if (breakWithoutSpace != _lineBreakWithoutSpaces)
     {
         _lineBreakWithoutSpaces = breakWithoutSpace;
-        _contentDirty = true;     
+        _contentDirty = true;
     }
 }
 
@@ -988,7 +991,7 @@ bool Label::alignText()
             _batchNodes.at(0)->reserveCapacity(_utf32Text.size());
 
         _reusedLetter->setBatchNode(_batchNodes.at(0));
-        
+
         _lengthOfString = 0;
         _textDesiredHeight = 0.f;
         _linesWidth.clear();
@@ -1017,9 +1020,9 @@ bool Label::alignText()
             }
             break;
         }
-    
+
         updateLabelLetters();
-        
+
         updateColor();
     }while (0);
 
@@ -1061,13 +1064,13 @@ bool Label::updateQuads()
     {
         batchNode->getTextureAtlas()->removeAllQuads();
     }
-    
+
     for (int ctr = 0; ctr < _lengthOfString; ++ctr)
     {
         if (_lettersInfo[ctr].valid)
         {
             auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf32Char];
-            
+
             _reusedRect.size.height = letterDef.height;
             _reusedRect.size.width  = letterDef.width;
             _reusedRect.origin.x    = letterDef.U;
@@ -1120,7 +1123,7 @@ bool Label::updateQuads()
 
                 _batchNodes.at(letterDef.textureID)->insertQuadFromSprite(_reusedLetter, index);
             }
-        }     
+        }
     }
 
 
@@ -1192,7 +1195,7 @@ void Label::scaleFontSizeDown(float fontSize)
     }else if (_currentLabelType == LabelType::STRING_TEXTURE){
         this->setSystemFontSize(fontSize);
     }
-    
+
     if (shouldUpdateContent) {
         this->updateContent();
     }
@@ -1480,7 +1483,7 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
 void Label::setCameraMask(unsigned short mask, bool applyChildren)
 {
     Node::setCameraMask(mask, applyChildren);
-    
+
     if (_textSprite)
     {
         _textSprite->setCameraMask(mask, applyChildren);
@@ -1575,16 +1578,18 @@ void Label::updateContent()
         _contentDirty = false;
     }
 
-#if CC_LABEL_DEBUG_DRAW
-    _debugDrawNode->clear();
-    Vec2 vertices[4] =
-    {
-        Vec2::ZERO,
-        Vec2(_contentSize.width, 0.0f),
-        Vec2(_contentSize.width, _contentSize.height),
-        Vec2(0.0f, _contentSize.height)
-    };
-    _debugDrawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
+#if DEBUG
+    if (isDebugDraw) {
+        _debugDrawNode->clear();
+        Vec2 vertices[4] =
+                {
+                        Vec2::ZERO,
+                        Vec2(_contentSize.width, 0.0f),
+                        Vec2(_contentSize.width, _contentSize.height),
+                        Vec2(0.0f, _contentSize.height)
+                };
+        _debugDrawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
+    }
 #endif
 }
 

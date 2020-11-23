@@ -296,11 +296,11 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 Sprite::Sprite()
 {
 #if DEBUG
-	if (isDebugDraw) {
-		_debugDrawNode = DrawNode::create();
-		_debugDrawNode->setName("debugNode");
-		addChild(_debugDrawNode);
-	}
+    if (isDebugDraw) {
+        _debugDrawNode = DrawNode::create();
+        _debugDrawNode->setName("debugNode");
+        addChild(_debugDrawNode);
+    }
 #endif //DEBUG
 }
 
@@ -1148,30 +1148,30 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         renderer->addCommand(&_trianglesCommand);
 
 #if DEBUG
-        if (isDebugDraw) {
-			_debugDrawNode->clear();
-			auto count = _polyInfo.triangles.indexCount / 3;
-			auto indices = _polyInfo.triangles.indices;
-			auto verts = _polyInfo.triangles.verts;
-			for (unsigned int i = 0; i < count; i++) {
-				//draw 3 lines
-				Vec3 from = verts[indices[i * 3]].vertices;
-				Vec3 to = verts[indices[i * 3 + 1]].vertices;
-				_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
+            if (isDebugDraw) {
+                _debugDrawNode->clear();
+                auto count = _polyInfo.triangles.indexCount / 3;
+                auto indices = _polyInfo.triangles.indices;
+                auto verts = _polyInfo.triangles.verts;
+                for (unsigned int i = 0; i < count; i++) {
+                    //draw 3 lines
+                    Vec3 from = verts[indices[i * 3]].vertices;
+                    Vec3 to = verts[indices[i * 3 + 1]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
 
-				from = verts[indices[i * 3 + 1]].vertices;
-				to = verts[indices[i * 3 + 2]].vertices;
-				_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
+                    from = verts[indices[i * 3 + 1]].vertices;
+                    to = verts[indices[i * 3 + 2]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
 
-				from = verts[indices[i * 3 + 2]].vertices;
-				to = verts[indices[i * 3]].vertices;
-				_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
-			}
-			auto anchor = getAnchorPoint();
-			auto rect = getCenterRect();
-			Vec2 pos = {(rect.origin.x + rect.size.width) * anchor.x, (rect.origin.y + rect.size.height) * anchor.y};
-			_debugDrawNode->drawPoint(pos, 4.f, _debugColorPoint);
-		}
+                    from = verts[indices[i * 3 + 2]].vertices;
+                    to = verts[indices[i * 3]].vertices;
+                    _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
+                }
+                auto anchor = getAnchorPoint();
+                auto rect = getCenterRect();
+                Vec2 pos = {(rect.origin.x + rect.size.width) * anchor.x, (rect.origin.y + rect.size.height) * anchor.y};
+                _debugDrawNode->drawPoint(pos, 4.f, _debugColorPoint);
+            }
 #endif //DEBUG
     }
 }
