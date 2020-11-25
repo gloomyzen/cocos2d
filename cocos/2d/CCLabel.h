@@ -143,6 +143,8 @@ public:
     */
     static Label* create();
 
+    virtual void setDebug(bool) override;
+
     /**
      * Allocates and initializes a Label, base on platform-dependent API.
      *

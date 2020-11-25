@@ -496,6 +496,25 @@ Label::~Label()
     CC_SAFE_RELEASE_NULL(_shadowNode);
 }
 
+void Label::setDebug(bool value) {
+#ifdef DEBUG
+    isDebugDraw = value;
+    if (value && !_debugDrawNode) {
+        _debugDrawNode = DrawNode::create();
+        _debugDrawNode->setName("debugNode");
+        addChild(_debugDrawNode);
+    }
+    if (value) {
+        _debugDrawNode->setVisible(true);
+    }
+    if (!value) {
+        _debugDrawNode->clear();
+        _debugDrawNode->setVisible(false);
+    }
+    updateContent();
+#endif
+}
+
 void Label::reset()
 {
     CC_SAFE_RELEASE_NULL(_textSprite);
