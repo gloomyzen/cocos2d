@@ -180,6 +180,9 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCSAXParser.h"
 
+//utility
+#include "utility/taskHolder.h"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication-ios.h"
     #include "platform/ios/CCGLViewImpl-ios.h"

@@ -1,5 +1,6 @@
 set(COCOS_2D_HEADER
 
+    utility/taskHolder.h
     2d/CCActionPageTurn3D.h
     2d/CCActionTween.h
     2d/CCGrid.h
@@ -70,6 +71,7 @@ set(COCOS_2D_HEADER
 
 set(COCOS_2D_SRC
 
+    utility/taskHolder.cpp
     2d/CCActionCamera.cpp
     2d/CCActionCatmullRom.cpp
     2d/CCAction.cpp

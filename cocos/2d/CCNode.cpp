@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "renderer/CCMaterial.h"
 #include "math/TransformUtils.h"
 #include "CCDrawNode.h"
+#include "utility/taskHolder.h"
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -1025,6 +1026,9 @@ void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
     this->addChild(child, child->getLocalZOrder(), child->_name);
+    if (auto item = dynamic_cast<taskHolder*>(child)) {
+    	item->executeTasks();
+    }
 }
 
 void Node::removeFromParent()
