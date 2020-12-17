@@ -190,10 +190,13 @@ private:
     bool _generatedFBOBindColor = false;
     bool _generatedFBOBindDepth = false;
     bool _generatedFBOBindStencil = false;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+    bool _framebufferReadWriteDisabled = false;
+#endif
 
     GLint _defaultFBO = 0;  // The value gets from glGetIntegerv, so need to use GLint
     GLuint _currentFBO = 0;
-    BufferGL* _vertexBuffer;
+    BufferGL* _vertexBuffer = nullptr;
     ProgramState* _programState = nullptr;
     BufferGL* _indexBuffer = nullptr;
     RenderPipelineGL* _renderPipeline = nullptr;
