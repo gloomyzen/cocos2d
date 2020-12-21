@@ -148,7 +148,7 @@ public:
 	bool getDebug() { return isDebugDraw; }
 	virtual void setDebug(bool);
 
-	virtual Node* findNode(const std::string &name, Node *node);
+	virtual Node* findNode(const std::string &name);
     /**
      * Gets the description string. It makes debugging easier.
      * @return A string

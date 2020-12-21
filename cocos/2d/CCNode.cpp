@@ -248,15 +248,15 @@ void Node::setDebug(bool value) {
 #endif
 	}
 
-Node* Node::findNode(const std::string &name, Node *parent) {
-	if (parent->getName() == name) {
-		return parent;
+Node* Node::findNode(const std::string &name) {
+	if (getName() == name) {
+		return this;
 	}
-	Node *nodeFound = parent->getChildByName(name);
+	Node *nodeFound = getChildByName(name);
 	if (!nodeFound) {
-		auto children = parent->getChildren();
+		auto children = getChildren();
 		for (auto child: children) {
-			nodeFound = findNode(name, child);
+			nodeFound = child->findNode(name);
 			if (nodeFound) break;
 		}
 	}
