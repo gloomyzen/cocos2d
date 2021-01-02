@@ -23,9 +23,7 @@ void taskHolder::executeTasks() {
 }
 
 void taskHolder::executeSingleTask(const nodeTasks& task) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-	task();
-#else
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 	auto atp = AsyncTaskPool::getInstance();
 	atp->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, [](void*){}, nullptr,
 				 [task]() {
@@ -41,5 +39,7 @@ void taskHolder::executeSingleTask(const nodeTasks& task) {
 							 break;
 					 }
 				 });
+#else
+	task();
 #endif
 }
