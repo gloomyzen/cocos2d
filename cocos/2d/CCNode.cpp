@@ -673,6 +673,10 @@ const Vec2 &Node::getPivotPoint() const {
     return _pivotPoint;
 }
 
+void Node::setMarkDirty() {
+	_transformUpdated = _transformDirty = _inverseDirty = true;
+}
+
 /// contentSize getter
 const Size& Node::getContentSize() const
 {

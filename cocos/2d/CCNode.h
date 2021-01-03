@@ -555,6 +555,8 @@ public:
 	virtual void setPivotPoint(const Vec2& anchorPoint);
 	virtual const Vec2& getPivotPoint() const;
     virtual const Vec2& getAnchorPointInPoints() const;
+    virtual void setMarkDirty();
+
 
 
     /**
