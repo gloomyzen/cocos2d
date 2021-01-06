@@ -278,4 +278,8 @@ CC_DLL const char* cocos2dVersion();
 
 NS_CC_END
 
+// Strings
+
+#define STRING_FORMAT(string, args...) cocos2d::StringUtils::format(string, args)
+
 #endif // __COCOS2D_H__
