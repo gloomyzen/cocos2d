@@ -183,7 +183,16 @@ function(cocos_mark_resources)
     foreach(RES_FILE ${opt_FILES} ${opt_UNPARSED_ARGUMENTS})
         get_filename_component(RES_FILE_ABS ${RES_FILE} ABSOLUTE)
         file(RELATIVE_PATH RES ${BASEDIR_ABS} ${RES_FILE_ABS})
+        if ("${RES}" STREQUAL ".DS_Store")
+            continue()
+        endif()
+        if ("${RES}" STREQUAL ".gitignore")
+            continue()
+        endif()
         get_filename_component(RES_LOC ${RES} PATH)
+        if ("${RES_LOC}" STREQUAL ".git")
+            continue()
+        endif()
         set_source_files_properties(${RES_FILE} PROPERTIES
                                     MACOSX_PACKAGE_LOCATION "${opt_RESOURCEBASE}/${RES_LOC}"
                                     HEADER_FILE_ONLY 1
