@@ -490,13 +490,13 @@ std::vector<Vec2> AutoPolygon::reduce(const std::vector<Vec2>& points, const Rec
     // if there are less than 3 points, then we have nothing
     if(size<3)
     {
-        log("AUTOPOLYGON: cannot reduce points for %s that has less than 3 points in input, e: %f", _filename.c_str(), epsilon);
+        //log("AUTOPOLYGON: cannot reduce points for %s that has less than 3 points in input, e: %f", _filename.c_str(), epsilon);
         return std::vector<Vec2>();
     }
     // if there are less than 9 points (but more than 3), then we don't need to reduce it
     else if (size < 9)
     {
-        log("AUTOPOLYGON: cannot reduce points for %s e: %f",_filename.c_str(), epsilon);
+        //log("AUTOPOLYGON: cannot reduce points for %s e: %f",_filename.c_str(), epsilon);
         return points;
     }
     float maxEp = MIN(rect.size.width, rect.size.height);
