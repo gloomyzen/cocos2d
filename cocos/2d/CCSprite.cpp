@@ -1787,4 +1787,8 @@ backend::ProgramState* Sprite::getProgramState() const
     return _programState;
 }
 
+Sprite::RenderMode Sprite::getRenderMode() const {
+    return _renderMode;
+}
+
 NS_CC_END
