@@ -1,5 +1,5 @@
-#ifndef SWIPE_RPG_TASKHOLDER_H
-#define SWIPE_RPG_TASKHOLDER_H
+#ifndef CORE_TASKHOLDER_H
+#define CORE_TASKHOLDER_H
 
 #include <functional>
 #include <deque>
@@ -32,4 +32,4 @@ private:
 };
 
 
-#endif //SWIPE_RPG_TASKHOLDER_H
+#endif //CORE_TASKHOLDER_H
