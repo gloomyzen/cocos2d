@@ -694,6 +694,14 @@ void Node::setContentSize(const Size & size)
     }
 }
 
+void Node::setStretch(float w, float h) {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto _size = cocos2d::Size();
+	_size.width = visibleSize.width * w;
+	_size.height = visibleSize.height * h;
+	setContentSize(_size);
+}
+
 // isRunning getter
 bool Node::isRunning() const
 {
