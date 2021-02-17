@@ -1,10 +1,6 @@
 #include "taskHolder.h"
 #include "cocos2d.h"
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
-	#include "base/CCAsyncTaskPool.h"
-#endif
-
-using namespace cocos2d;
+#include "base/CCAsyncTaskPool.h"
 
 taskHolder::taskHolder() {}
 
@@ -23,9 +19,8 @@ void taskHolder::executeTasks() {
 }
 
 void taskHolder::executeSingleTask(const nodeTasks& task) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-	auto atp = AsyncTaskPool::getInstance();
-	atp->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, [](void*){}, nullptr,
+	auto atp = cocos2d::AsyncTaskPool::getInstance();
+	atp->enqueue(cocos2d::AsyncTaskPool::TaskType::TASK_OTHER, [](void*){}, nullptr,
 				 [task]() {
 					 auto res = task();
 					 switch (res) {
@@ -39,7 +34,4 @@ void taskHolder::executeSingleTask(const nodeTasks& task) {
 							 break;
 					 }
 				 });
-#else
-	task();
-#endif
 }

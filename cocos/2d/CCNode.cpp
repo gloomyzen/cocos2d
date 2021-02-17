@@ -45,6 +45,7 @@ THE SOFTWARE.
 #include "math/TransformUtils.h"
 #include "CCDrawNode.h"
 #include "utility/taskHolder.h"
+#include "base/CCAsyncTaskPool.h"
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -1039,7 +1040,11 @@ void Node::addChild(Node *child)
     CCASSERT( child != nullptr, "Argument must be non-nil");
     this->addChild(child, child->getLocalZOrder(), child->_name);
     if (auto item = dynamic_cast<taskHolder*>(child)) {
-    	item->executeTasks();
+		auto atp = cocos2d::AsyncTaskPool::getInstance();
+		atp->enqueue(cocos2d::AsyncTaskPool::TaskType::TASK_OTHER, [](void*){}, nullptr,
+					[item]() {
+						item->executeTasks();
+					 });
     }
 }
 
