@@ -27,7 +27,6 @@ protected:
 	virtual std::deque<nodeTasks> getTasks() = 0;
 
 private:
-	void executeSingleTask(const nodeTasks&);
 	bool allTasksLoaded = false;
 };
 
