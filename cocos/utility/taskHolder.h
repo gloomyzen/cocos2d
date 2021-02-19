@@ -6,8 +6,7 @@
 
 enum class eTasksStatus {
 	STATUS_OK = 0,
-	STATUS_ERROR_BREAK,
-	STATUS_ERROR_RETRY
+	STATUS_ERROR_BREAK
 };
 
 typedef std::function<eTasksStatus()> nodeTasks;
