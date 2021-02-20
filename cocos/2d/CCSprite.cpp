@@ -46,6 +46,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+static Texture2D::TexParams pixelTexParams = {
+		backend::SamplerFilter::NEAREST,       // TextureMinFilter
+		backend::SamplerFilter::NEAREST,       // TextureMagFilter
+		backend::SamplerAddressMode::CLAMP_TO_EDGE, // TextureWrapMode Horizontal
+		backend::SamplerAddressMode::CLAMP_TO_EDGE  // TextureWrapMode Vertical
+};
+
 // MARK: create, init, dealloc
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
@@ -285,6 +292,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
         setBatchNode(nullptr);
         result = true;
+        setCorrectPixelTexture();
     }
 
     _recursiveDirty = true;
@@ -1789,6 +1797,11 @@ backend::ProgramState* Sprite::getProgramState() const
 
 Sprite::RenderMode Sprite::getRenderMode() const {
     return _renderMode;
+}
+
+void Sprite::setCorrectPixelTexture() {
+	if (getTexture() != nullptr)
+		getTexture()->setTexParameters(pixelTexParams);
 }
 
 NS_CC_END

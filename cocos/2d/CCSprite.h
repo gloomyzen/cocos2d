@@ -628,6 +628,7 @@ CC_CONSTRUCTOR_ACCESS :
     virtual void updateShaders(const char* vert, const char* frag);
 
     virtual RenderMode getRenderMode() const;
+    virtual void setCorrectPixelTexture();
 
 protected:
     virtual void updateColor() override;
