@@ -629,6 +629,7 @@ CC_CONSTRUCTOR_ACCESS :
 
     virtual RenderMode getRenderMode() const;
     virtual void setCorrectPixelTexture();
+    static void setUsePixelMode(bool value);
 
 protected:
     virtual void updateColor() override;

@@ -53,6 +53,8 @@ static Texture2D::TexParams pixelTexParams = {
 		backend::SamplerAddressMode::CLAMP_TO_EDGE  // TextureWrapMode Vertical
 };
 
+static bool usePixelMode = false;
+
 // MARK: create, init, dealloc
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
@@ -1800,8 +1802,12 @@ Sprite::RenderMode Sprite::getRenderMode() const {
 }
 
 void Sprite::setCorrectPixelTexture() {
-	if (getTexture() != nullptr)
+	if (getTexture() != nullptr && usePixelMode)
 		getTexture()->setTexParameters(pixelTexParams);
+}
+
+void Sprite::setUsePixelMode(bool value) {
+    usePixelMode = value;
 }
 
 NS_CC_END
