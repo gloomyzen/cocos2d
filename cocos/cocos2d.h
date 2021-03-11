@@ -280,6 +280,6 @@ NS_CC_END
 
 // Strings
 
-#define STRING_FORMAT(string, args...) cocos2d::StringUtils::format(string, args)
+#define STRING_FORMAT(string, ...) cocos2d::StringUtils::format(string, __VA_ARGS__)
 
 #endif // __COCOS2D_H__
