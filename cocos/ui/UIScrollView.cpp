@@ -648,8 +648,8 @@ void ScrollView::scrollChildren(const Vec2& deltaMove)
     {
         // If the position of the inner container is out of the boundary, the offsets should be divided by two.
         Vec2 outOfBoundary = getHowMuchOutOfBoundary();
-        realMove.x *= (outOfBoundary.x == 0 ? 1 : 0.5f);
-        realMove.y *= (outOfBoundary.y == 0 ? 1 : 0.5f);
+        realMove.x *= (outOfBoundary.x == 0 ? 1 : 0.25f);
+        realMove.y *= (outOfBoundary.y == 0 ? 1 : 0.25f);
     }
     
     if(!_bounceEnabled)
