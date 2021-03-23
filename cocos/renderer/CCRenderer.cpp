@@ -734,9 +734,14 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     transform.transformPoint(&v3p);
     Vec2 v2p = Camera::getVisitingCamera()->projectGL(v3p);
 
+    auto sizeFactor = 1.f;
+    //fix hide object with rotation in 3d scene
+    if (Director::getInstance()->getProjection() == Director::Projection::_3D) {
+        sizeFactor = 2.f;
+    }
     // convert content size to world coordinates
-    float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
-    float wshh = std::max(fabsf(hSizeX * transform.m[1] + hSizeY * transform.m[5]), fabsf(hSizeX * transform.m[1] - hSizeY * transform.m[5]));
+    float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4])) * sizeFactor;
+    float wshh = std::max(fabsf(hSizeX * transform.m[1] + hSizeY * transform.m[5]), fabsf(hSizeX * transform.m[1] - hSizeY * transform.m[5])) * sizeFactor;
 
     // enlarge visible rect half size in screen coord
     visibleRect.origin.x -= wshw;
