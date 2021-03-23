@@ -1133,18 +1133,22 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     //TODO: arnold: current camera can be a non-default one.
     setMVPMatrixUniform();
-
 #if CC_USE_CULLING
     // Don't calculate the culling if the transform was not updated
     auto visitingCamera = Camera::getVisitingCamera();
     auto defaultCamera = Camera::getDefaultCamera();
-    if (visitingCamera == nullptr)
+    if (visitingCamera == nullptr) {
         _insideBounds = true;
-    else if (visitingCamera == defaultCamera)
-        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
-    else
+    } else if (visitingCamera == defaultCamera) {
+        auto tempSize = _contentSize;
+        if (Director::getInstance()->getProjection() == Director::Projection::_3D) {
+            tempSize = tempSize * 1.5f;
+        }
+        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, tempSize) : _insideBounds;
+    } else {
         // XXX: this always return true since
         _insideBounds = renderer->checkVisibility(transform, _contentSize);
+    }
 
     if(_insideBounds)
 #endif
